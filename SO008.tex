@@ -1,0 +1,46 @@
+\section{HelenOS}
+
+\subsection{Nombre del proyecto o sistema operativo}
+El nombre del sistema operativo es ``HelenOS''. El proyecto fue iniciado por Jakub Jermar en 2001, en ese momento era un código independiente que funcionaba como kernel para IA-32. \citep{decky2015application}
+
+\subsection{Enlace al repositorio y/o documentación oficial}
+\begin{itemize}
+    \item \textbf{Enlace al repositorio oficial:} \url{https://github.com/HelenOS/helenos}
+    \item \textbf{Documentación oficial y Wiki:} \url{https://www.helenos.org/}
+\end{itemize}
+
+\subsection{Objetivo del proyecto}
+Según \citep{decky2015application}, este sistema operativo, tiene un enfoque educativo y experimental. Además, busca servir como una plataforma para la investigación y desarrollo de sistemas operativos de propósito general, teniendo muy en cuenta la fiabilidad y practicidad.
+
+\subsection{Lenguaje(s) de implementación}
+Según \citep{decky2010road} y confirmando con el repositorio oficial \citep{helenos_GitHub}, el sistema operativo HelenOS está principalmente implementado en C, con algo de apoyo de C++, Meson como “build system”, algunos componentes escritos en ensamblador para tareas de bajo nivel y python para scripts auxiliares.
+
+\subsection{Arquitectura del sistema (monolítica, microkernel, etc.)}
+El sistema operativo HelenOS se baso en la arquitectura multiserver de microkernel, multiserver es un tipo de arquitectura microkernel, donde el núcleo del sistema operativo (microkernel) es responsable de las funciones básicas para el funcionamiento del sistema operativo como gestión de memoria, comunicación de procesos y scheduling; y por otro lado, los demás servicios del sistema operativo se implementan como “servidores” y se ejecutan en el espacio de usuario. De esta manera, los servidores pueden ser desarrollados, cambiados y reiniciados de manera independiente sin afectar al kernel \citep{decky2015application}.
+
+\subsection{Componentes implementados (procesos, memoria, archivos, etc.)}
+
+\subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
+HelenOS utiliza un entorno de desarrollo multiplataforma. Entre sus principales herramientas están:
+\begin{itemize}
+    \item \textbf{Compilador:} GCC y Clang, con toolchains cruzadas específicas para las arquitecturas soportadas (x86, ARM, MIPS, SPARC, PowerPC e Itanium).
+    \item \textbf{Emulador:} QEMU, empleado para probar imágenes ISO y depurar el comportamiento del microkernel.
+    \item \textbf{Sistema de construcción:} Makefile personalizado con scripts Bash y Python para la compilación cruzada de componentes.
+    \item \textbf{Control de versiones:} Git y repositorio público en GitHub \citep{helenosGitHub}.
+\end{itemize}
+
+Theseus emplea y modifica herramientas de y para Rust; también utiliza máquinas virtuales. Las principales herramientas son las siguientes:
+\begin{itemize}
+    \item \textbf{Rust toolchain:} Uso de \texttt{cargo}, \texttt{rustc} y crates estándar del ecosistema Rust para la compilación, gestión de dependencias y construcción modular de Theseus.
+    \item \textbf{Sistema de carga dinámica y enlazado en tiempo de ejecución:} Theseus modifica el compilador (rustc) y el “linker” para permitir la carga y sustitución de (cells) en ejecución \citep{boos2017theseus}.
+    \item \textbf{Emuladores y máquinas virtuales:} Se utilizan entornos como “QEMU” para probar, depurar y validar el funcionamiento del sistema \citep{theseus_GitHub}.
+    \item \textbf{Librería estandar de C:} Actualmente, Theseus utiliza gran parte de \textbf{relibc} de Redox OS como su biblioteca estándar de C, pero planea desarrollar su propia versión llamada \textbf{tlibc} (Theseus libc) en el futuro \citep{theseus_GitHub}.
+\end{itemize}
+
+\subsection{Nivel de complejidad y accesibilidad para estudiantes}
+Considerando un entorno académico, que es justamente donde rust brilla, es un proyecto digno de estudio,
+con un altísimo nivel de complejidad debido también y en mayor medida, a su arquitectura basada en cells; también cabe mencionar que
+la dificultad sube debido al uso de la versión de la librería estandar de C (relibc) y el uso de QEMU, el cual es un emulador no tan intuitivo y del cual no hay tanta documentación en español.
+
+Sin embargo, se ve compensado debido a su alta accesibilidad, la cual es posible gracias a su extensa documentación 
+y estudios en torno a este proyecto, propiciados por el mismo creador de Theseus.  
