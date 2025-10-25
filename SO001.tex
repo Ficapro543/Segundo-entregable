@@ -64,6 +64,18 @@ Comunicación entre procesos & \texttt{ipc.c} & Controla el intercambio seguro d
 \centering
 Fuente: Elaboración propia con base en \citep[pag. 20--42]{tanenbaum2006}.
 \end{table}
+\subsubsection{Sistema de archivos}
+Gestiona la estructura jerárquica de archivos. Permite montar diferentes dispositivos (como CD-ROM, discos duros, disco solido, memoria flash y entre otros) en un único árbol de directorios mediante la llamada \texttt{mount}. Su trabajo es administra rutas, directorios y accesos sin depender del dispositivo.
+\subsubsection{Archivos especiales}
+ Modelan los dispositivos físicos como archivos. Los archivos de bloque permiten acceder a unidades de disco por bloques, mientras que los de carácter representan flujos continuos (impresoras, módems y todo dispositivos de entrada y salida). Con la finalidad de permitir operar los dispositivos usando las mismas llamadas que para archivos comunes.
+\subsubsection{Tuberías}
+Implementan la comunicación entre procesos mediante código en  pseudoarchivos. Un proceso escribe en la tubería y otro lee, logrando sincronización y transferencia de datos sin necesidad de archivos temporales. Base del uso de tuberías en el shell.
+\subsubsection{Shell}
+Proporciona la interfaz principal con el usuario. Tiene como objetivo ejecuta programas, redirige entradas y salidas, conecta procesos con tuberías y permite tareas en segundo plano. Utiliza intensivamente las llamadas al sistema del núcleo.
+\subsubsection{Llamadas al sistema}
+ Contiene la interfaz entre los programas de usuario y el sistema operativo. Incluyen operaciones para manejo de procesos y archivos. En MINIX 3, la mayoría de las llamadas siguen el estándar POSIX.
+\subsubsection{Comunicación entre procesos}
+Gestiona el intercambio de mensajes entre procesos del sistema y el microkernel. Esta arquitectura refuerza el aislamiento y la estabilidad, ya que los servicios del sistema operan como procesos independientes que se comunican de forma controlada.
 
 \subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
 MINIX acepta varios lengujes de programación y compliladores, lo que facilita  el desarrollo de software de usuario como compilaciones con el propio sistema operativo. \citep{minix_wiki_features}

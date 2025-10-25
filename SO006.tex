@@ -50,9 +50,18 @@ Servicios y compatibilidad POSIX & \texttt{rumprun / NetBSD libc} & Soporta serv
 \centering
 Fuente: Elaboración propia con base en \citep{nikolaev2021librettos}.
 \end{table}
-
-
-
+\subsubsection{Gestión de procesos y planificación}
+Gestiona el intercambio de mensajes entre procesos del sistema y el microkernel. Esta arquitectura refuerza el aislamiento y la estabilidad, ya que los servicios del sistema operan como procesos independientes que se comunican de forma controlada.
+\subsubsection{Gestion de memoria}
+Cada dominio maneja su propia memoria virtual usando los mecanismos estándar de NetBSD sobre Rumprun. Para acceso directo a hardware usa PCI passthrough e IOMMU, lo que permite apartamiento seguro entre dominios. Además, soporta SR-IOV para dividir dispositivos físicos NICs o NVMe en funciones virtuales asignables a cada VM.
+\subsubsection{Sistema de archivos}
+Reutiliza el sistema de archivos de NetBSD. Una instancia de Rumprun con un volumen ext3 sobre NVMe actúa como servidor NFS, exportando volúmenes por red. Los clientes montan este recurso mediante NFS, demostrando buen rendimiento en pruebas de E/S.
+\subsubsection{Controladores de dispositivo}
+ Reutiliza los controladores de NetBSD como por ejemplo, ixgbe para NICs Intel 10GbE y NVMe. Los mismos drivers funcionan en ambos modos de operación como para aislado o library-OS, permitiendo cambiar dinámicamente de modo sin reemplazar controladores.
+ \subsubsection{Red}
+Ejecuta la pila TCP/IP de NetBSD dentro del espacio de aplicación o en un servidor de red dedicado. Este servidor reenvía tramas L2 mediante canales virtuales VIF. Si el servidor falla, el estado TCP se mantiene en la aplicación, lo que permite su recuperación.
+\subsubsection{Servicios y compatibilidad POSIX} 
+LibrettOS es compatible con POSIX/BSD, soportando servicios como SSH, bases de datos y utilidades estándar. Algunas llamadas complejas como fork() y pipe(), aún no están implementadas, pero se consideran alcanzables en futuras versiones.
 \subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
 Según \citep{nikolaev2021librettos}, LibrettOS se basa en tecnologías como rump kernels y el uso de POSIX.
 
