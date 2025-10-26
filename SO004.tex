@@ -45,52 +45,101 @@ A continuación, se presenta una tabla con los principales componentes y subsist
 
 \begin{table}[H]
 \centering
-\caption{Funcionamiento técnico (idea clave) de los principales subsistemas de Redox OS}
+\caption{Funcionamiento técnico de los principales subsistemas de Redox OS}
 \begin{tabular}{|p{5cm}|p{4cm}|p{6cm}|}
 \hline
 \textbf{Componente / Sub-sistema} & \textbf{Nombre en Redox (archivo/crate)} & \textbf{Funcionamiento técnico (idea clave)} \\ \hline
-Gestión de memoria & \texttt{memory}, \texttt{paging}, \texttt{rmm} & Implementa paginación virtual por demanda y gestión de marcos físicos. \\ \hline
-Gestión de procesos y multitarea & \texttt{kernel}, \texttt{scheme::proc} & Cada proceso se ejecuta en espacio de usuario, gestionado por el microkernel. \\ \hline
-Sistema de archivos & \texttt{redoxfs} & Sistema de archivos nativo de Redox, implementado completamente en Rust. \\ \hline
-Gestión de dispositivos y E/S & \texttt{drivers}, \texttt{schemes} & Controladores modulares gestionados como servicios de usuario schemes. \\ \hline
-Comunicación entre procesos (IPC) & \texttt{syscall}, \texttt{scheme} & Utiliza el modelo \textit{scheme} para llamadas al sistema y paso de mensajes entre procesos y servicios del kernel. \\ \hline
-Planificación y temporización & \texttt{scheduler}, \texttt{timer} & Planificador cooperativo basado en colas de prioridad. \\ \hline
-Gestión de usuarios y permisos & \texttt{user}, \texttt{authd} & Módulos dedicados al control de autenticación y separación de privilegios mediante el servicio \texttt{authd}. \\ \hline
-Interfaz gráfica (GUI) & \texttt{orbital}, \texttt{orbtk} & Entorno gráfico modular escrito en Rust; implementa servidor de ventanas y toolkit gráfico seguro. \\ \hline
-Red y conectividad & \texttt{netstack}, \texttt{ethernetd}, \texttt{ipd} & Pila de red nativa en Rust, con servicios de capa física, IP y sockets; completamente en espacio de usuario. \\ \hline
-Gestión del sistema y servicios & \texttt{init}, \texttt{logd}, \texttt{backgroundd} & Servicios del espacio de usuario que controlan inicialización, registros y tareas de sistema en segundo plano. \\ \hline
+Gestión de memoria & \texttt{memory}, \texttt{paging}, \texttt{rmm} & Maneja paginación virtual y asignación segura de marcos físicos. \\ \hline
+Gestión de procesos y multitarea & \texttt{kernel}, \texttt{scheme::proc} & Ejecuta procesos aislados con planificación cooperativa. \\ \hline
+Sistema de archivos & \texttt{redoxfs} & Sistema nativo en Rust con soporte concurrente. \\ \hline
+Subsistemas de E/S y drivers & \texttt{drivers}, \texttt{schemes} & Drivers en espacio de usuario con namespaces restringidos. \\ \hline
+Comunicación entre procesos (IPC) & \texttt{syscall}, \texttt{scheme}, \texttt{libredox} & IPC basado en mensajes mediante estructuras SQE/CQE. \\ \hline
+Planificación y temporización & \texttt{scheduler}, \texttt{timer} & Planificador por prioridad con temporizador interno. \\ \hline
+Gestión de usuarios y permisos & \texttt{user}, \texttt{authd} & Controla autenticación y separación de privilegios. \\ \hline
+Interfaz gráfica (GUI) & \texttt{orbital}, \texttt{orbtk} & Servidor de ventanas y toolkit gráfico modular. \\ \hline
+Red y conectividad & \texttt{netstack}, \texttt{ethernetd}, \texttt{ipd} & Pila de red completa en espacio de usuario. \\ \hline
+Gestión del sistema y servicios & \texttt{init}, \texttt{logd}, \texttt{backgroundd} & Controla inicio, logs y servicios del sistema. \\ \hline
+Bibliotecas del sistema y compatibilidad & \texttt{relibc}, \texttt{redox\_rt} & Implementan llamadas POSIX sobre los \textit{schemes}. \\ \hline
 \end{tabular}
 \centering
-Fuente: Elaboración propia con base en \citep{ redox_github, redox_docs}.
+Fuente: Elaboración propia con base en \citep{redox_github, redox_docs}.
 \end{table}
 
+
 \subsubsection*{Gestión de memoria}
-La gestión de memoria es fundamental para el kernel de cualquier sistema operativo . Proporcionar una forma rápida de que los programas asignen y liberen memoria regularmente es una responsabilidad fundamental del kernel. Existen diversas implementaciones para asignar memoria física , como mapas de bits, asignación de amigos y el uso de estructuras de árbol o colas/pilas \citep{osdev_memory_management}.
+La gestión de memoria en Redox OS utiliza paginación virtual y asignación segura de marcos físicos. 
+El crate \texttt{rmm} implementa el gestor de memoria del kernel, garantizando aislamiento entre procesos y eficiencia en la asignación dinámica \citep{osdev_memory_management}.
 
+\subsubsection*{Gestión de procesos y multitarea}
+El kernel de Redox implementa multitarea cooperativa, donde cada proceso se ejecuta en espacio de usuario y el microkernel gestiona la planificación y sincronización básica entre tareas \citep{osdev_scheduling_algorithms}.
 
-\subsubsection*{Scheduling / multitarea}
-
-Un scheduling algorithm determina cuánto tiempo de CPU se asigna a los procesos y subprocesos.  
-El objetivo de cualquier algoritmo de planificación es cumplir con una serie de criterios fundamentales:
-
-\begin{itemize}
-    \item \textbf{Equidad:} ninguna tarea debe quedarse sin recursos; todas deben tener la oportunidad de usar tiempo de CPU.
-    \item \textbf{Prioridad:} si se emplean niveles de prioridad, una tarea de baja prioridad no debe retrasar la ejecución de una tarea de alta prioridad.
-    \item \textbf{Escalabilidad:} el planificador debe mantener un rendimiento estable ante un número creciente de tareas, idealmente con una complejidad de $O(1)$, como ocurre en el kernel de Linux.
-\end{itemize}
-
-
+\subsubsection*{Sistema de archivos}
+\texttt{RedoxFS} es el sistema de archivos nativo, completamente escrito en Rust. 
+Ofrece acceso concurrente, soporte para permisos y comunicación mediante el modelo de schemes.
 
 \subsubsection*{Subsistemas de E/S y drivers}
-
-
-
+En Redox OS, los controladores de dispositivos se ejecutan como demonios en espacio de usuario. 
+Cada driver tiene su propio namespace restringido, evitando daños al sistema principal. 
+Esta separación aumenta la seguridad y la estabilidad del sistema \citep{redox_drivers_gitlab}.
 
 \subsubsection*{Comunicación entre módulos}
+La comunicación se realiza mediante el sistema de schemes. 
+Las llamadas del usuario se traducen en mensajes SQE/CQE, enviados entre el kernel y los servicios de usuario. 
+Esto asegura modularidad y aislamiento total entre componentes \citep{redox_communication}.
+
+\subsubsection*{Planificación y temporización}
+El planificador emplea colas de prioridad para asignar tiempo de CPU. 
+Busca mantener equidad, prioridad y escalabilidad con una complejidad cercana a $O(1)$ \citep{osdev_scheduling_algorithms}.
+
+\subsubsection*{Gestión de usuarios y permisos}
+Los servicios \texttt{authd} y \texttt{user} manejan autenticación, control de accesos y separación de privilegios, previniendo escaladas no autorizadas \citep{redox_security}.
+
+\subsubsection*{Interfaz gráfica (GUI)}
+\texttt{Orbital} y \texttt{OrbTK} implementan el entorno gráfico de Redox. 
+Incluyen un servidor de ventanas, gestión de eventos y un toolkit modular, todo en Rust \citep{redox_graphics_windowing}.
+
+\subsubsection*{Red y conectividad}
+El sistema de red, compuesto por \texttt{netstack}, \texttt{ethernetd} e \texttt{ipd}, implementa una pila TCP/IP segura en espacio de usuario, sin requerir acceso directo al kernel \citep{redox_components}.
+
+\subsubsection*{Gestión del sistema y servicios}
+Servicios como \texttt{init}, \texttt{logd} y \texttt{backgroundd} administran la inicialización, el registro de eventos y procesos en segundo plano, similares al sistema init de Unix \citep{redox_user_space}.
+
+\subsubsection*{Bibliotecas del sistema y compatibilidad}
+\texttt{relibc} y \texttt{redox\_rt} ofrecen compatibilidad POSIX. 
+Estas bibliotecas traducen funciones estándar (como \texttt{open}, \texttt{read}, \texttt{write}) a operaciones sobre schemes del sistema \citep{redox_programs_libraries}.
 
 
-\subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
+\subsection{Herramientas utilizadas}
 
+El ecosistema de desarrollo de Redox OS está construido íntegramente sobre las herramientas del lenguaje \texttt{Rust} y un conjunto de utilidades de compilación y virtualización que garantizan portabilidad y reproducibilidad en distintos entornos.  
+
+Entre las principales herramientas empleadas se destacan:
+
+\begin{itemize}
+    \item \textbf{Rust y Cargo:} Redox OS está escrito completamente en Rust, utilizando \texttt{cargo} como sistema de compilación y gestión de dependencias. Cada componente del sistema (kernel, drivers, librerías y servicios) se organiza como un \textit{crate}.
+    \item \textbf{Make y scripts de automatización:} El proceso de construcción global se gestiona mediante archivos \texttt{Makefile} y scripts en Bash, que coordinan la compilación cruzada de todos los crates y bibliotecas.
+    \item \textbf{Podman y Docker:} Se utilizan para entornos de compilación reproducibles. Estas herramientas permiten construir el sistema dentro de contenedores sin necesidad de alterar la configuración del host.
+    \item \textbf{QEMU:} Es el emulador principal para ejecutar y depurar Redox OS sin requerir hardware físico. Permite probar el kernel, los controladores y las aplicaciones en un entorno controlado.
+    \item \textbf{Git y GitLab:} Todo el código fuente está alojado en GitLab (anteriormente en GitHub). Git se usa para control de versiones, colaboración y revisión de código.
+    \item \textbf{Herramientas de compilación cruzada (cross):} Permiten compilar Redox para distintas arquitecturas como \texttt{x86\_64}, \texttt{i686} o \texttt{ARM64}, manteniendo el mismo entorno de desarrollo.
+\end{itemize}
+
+Estas herramientas no solo simplifican el desarrollo, sino que también facilitan la experimentación y el aprendizaje, ya que permiten reconstruir completamente el sistema operativo desde el código fuente, probarlo en un entorno virtual y modificar cualquier parte del kernel o de los servicios del usuario.
+
+\textit{Corresponde a la sección 6.1–6.8 del manual oficial de Redox OS sobre el proceso de construcción y herramientas de compilación \citep{redox_build_process}.}
 
 
 \subsection{Nivel de complejidad y accesibilidad para estudiantes}
+
+Redox OS presenta un equilibrio notable entre complejidad técnica y accesibilidad educativa.  
+Aunque es un sistema operativo funcional y moderno, su diseño modular en torno a un microkernel y su implementación en \texttt{Rust} facilitan el estudio y la modificación de sus componentes por parte de estudiantes o investigadores.
+
+\begin{itemize}
+    \item \textbf{Código fuente legible y seguro:} Rust impone reglas de seguridad de memoria y control de concurrencia, reduciendo errores comunes de punteros y sincronización. Esto hace que el código de Redox sea más fácil de entender para quienes se inician en el desarrollo de sistemas.
+    \item \textbf{Arquitectura microkernel:} Su estructura simplificada y modular permite analizar cada subsistema de manera aislada (memoria, procesos, archivos, drivers, etc.), lo que favorece la comprensión progresiva del sistema operativo.
+    \item \textbf{Facilidad de compilación y pruebas:} Gracias a \texttt{QEMU} y a los contenedores de \texttt{Podman}, los estudiantes pueden compilar y ejecutar Redox en sus propias máquinas sin riesgo de dañar su sistema anfitrión.
+    \item \textbf{Documentación educativa:} El Redox OS Book ofrece guías detalladas para compilar, depurar y extender el sistema, convirtiéndolo en una herramienta pedagógica ideal para cursos de sistemas operativos o arquitectura de software.
+    \item \textbf{Comunidad activa:} Existe una comunidad abierta de desarrolladores y estudiantes en GitLab y Matrix que brindan soporte, facilitan la colaboración y fomentan el aprendizaje conjunto.
+\end{itemize}
+
+\textit{Corresponde a las secciones 1.1–1.7 y 6.1–6.8 del manual oficial de Redox OS \citep{redox_docs, redox_build_process}.}
