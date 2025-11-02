@@ -10,8 +10,7 @@ Se basa en la combinación de dos paradigmas un microkernel y el modelo de bibli
 \end{itemize}
 
 \subsection{Objetivo del proyecto}
-Según \citep[pag. 1]{nikolaev2021librettos}, LibrettOS es un diseño de sistema operativo que emplea 2 paradigmas para abordar al mismo tiempo el aislamiento, rendimiento, compatibilidad, recuperación y actualizaciones en tiempo de ejecución, también actúa como un sistema de biblioteca para un mejor rendimiento, acceso a aplicaciones como el almacenamiento y redes.
-La ventaja es que ambos paradigmas coinciden en el mismo sistema operativo que permite logra el objetivo de mayor flexibilidad, mejor optimización en el rendimiento, investigación como desarrollo y compatibilidad con aplicaciones POSIX.
+Según \citep{nikolaev2021librettos}, LibrettOS es un sistema operativo experimental de investigaciones. Su objetivo es explorar el paradigma del núcleo híbrido que combine con el microkernel multiserver, para mantener mayor seguridad y tolerancia a errores a fallos y permitir a las aplicaciones el acceso a directamente al hardware para un alto rendimiento. Especificamente no fue creado para fines educativo ni para uso constante, sino como un prototipo academico para diseñar nuevas ideas acerca de sistemas operativos.
 \subsection{Lenguaje(s) de implementación}
 Según el repositorio \citep{repositorio_rumprun_github}, LibrettOS fue implementado principalmente en el lenguaje de programación C (55.8\%), C++(0.5\%), Assembly(9.5\%), Makefile(4.2\%) y objetive-C(0.3\%), lo cual es clásico para sistemas operativos debido a la conexión cercana con el hardware y la facilidad
 para escribir código. Durante años, algunas partes del código también han sido implementadas en ensamblador para aprovechar características específicas del 
