@@ -1,7 +1,7 @@
 \section{Haiku OS}
 
 \subsection{Nombre del proyecto o sistema operativo}
-Según \citep{leavengood2012haiku}, Haiku Os es un proyecto visionario con el nombre del sistema operativo Haiku OS en la actualidad,pero que antes era OpenBeOS, un sistema operativo fundada en la División de Corporaciones del Estado de Nueva York como una organización sin fines de lucro en julio del 2003. por su fundador Michael Phipps.
+Según \citep{leavengood2012haiku}, Haiku Os es un proyecto visionario con el nombre del sistema operativo Haiku OS en la actualidad, pero que antes era OpenBeOS, un sistema operativo fundado en la División de Corporaciones del Estado de Nueva York como una organización sin fines de lucro en julio del 2003. por su fundador Michael Phipps.
 El nombre del sistema operativo proviene de la palabra japoness ``Haiku``, por que era usada en los mensajes de error de BeOS, eran mensajes presentados de forma poética japonesa.
 
 \subsection{Enlace al repositorio y/o documentación oficial}
@@ -11,20 +11,21 @@ El nombre del sistema operativo proviene de la palabra japoness ``Haiku``, por q
     \item \textbf{Sitio web oficial del proyecto:} \url{https://www.haiku-os.org/get-haiku/installation-guide/}
 \end{itemize}
 
-
 \subsection{Objetivo del proyecto}
-Este sistema operativo tiene varios objetivo, dentro de las claves se encuentran:
+Este sistema operativo tiene varios objetivos, dentro de las claves se encuentran:
 \begin{itemize}
-    \item \textbf{Facil de usar y sencillez:} Según \citep{haiku_website_2025} El desarrollo de Haiky OS inspirado en BeOS, fue diseñado para la informática personal, Haiku OS es rápido, fácil de aprender y muy potente. Accesible por cualquier usuario que tenga a su alcance.
+    \item \textbf{Facil de usar y sencillez:} Según \citep{haiku_website_2025} El desarrollo de HaikuOS inspirado en BeOS, fue diseñado para la informática personal, HaikuOS es rápido, fácil de aprender y muy potente. Accesible por cualquier usuario que tenga a su alcance.
     El desarrollo se centra en la informática personal y multimedia \citep{Gonzales2017haiku}. 
     \item \textbf{Alto rendimiento y respuesta rápida:} Al igual que BeOS, por la potencia de lo microprocesadores. Capaz de aprovechar cuatro o mas procesadores, BeOS se basa en el multiprocesamiento simétrica que acelera las operaciones \citep{beinc_beos_datasheet}. Haiku mantenío esa velocidad, respuestas y potencia. Como menciona Leavengood en \citep{leavengood2012haiku}, Haiku OS  y BeOS son capaz de manejar múltiples tareas y procesos. y según \citep{Installing2024haiku} Dado que esta inspirada en BeFS(BeFiles System), lo permite que aumente la velocidad de acceso a los datos y almacenamiento.
     \item \textbf{Código abierto y comunidad activa:} Haiku OS es un proyecto de código abierto, lo que significa que su código fuente está disponible para que cualquier usuario pueda revisarlo, modificarlo y mejorar su desarrollo \citep{leavengood2012haiku}.
     \item \textbf{Compatibilidad con aplicaciones de BeOS:} Haiku OS busca mantener la compatibilidad con las aplicaciones desarrolladas para BeOS, lo que permite a los usuarios ejecutar software antiguo en el nuevo sistema operativo \citep{Gonzales2017haiku}.
     \item \textbf{Arquitectura modular} Haiku OS está adopta el kernel hibrido multihilo, lo que le permite organizar de manera eficiente todas las tareas  y procesos. El sistema operativo se basa en principios de modularidad donde los componentes se pueden mejorar o reemplazarse sin afectar al sistema \citep{tutorialspoint_haiku_os}.
 \end{itemize}
+
 \subsection{Lenguaje(s) de implementación}
 Haiku esta implementado en C++, haciendo uso de una API de Be orientada a objetos (The kits) que facilita el desarrollo de aplicaciones y controladores de dispositivos \citep{leavengood2012haiku}.
 incluye contenedores de la Biblioteca de Plantillas Estandar de C++ (STL) y otras bibliotecas de terceros como OpenSSL, SQLite y zlib \citep{haiku_website_2025}.
+
 \subsection{Arquitectura del sistema (monolítica, microkernel, etc.)}
 El sistema operativo esta basado en BeOS un Kernel hibrido modular. Su núcleo se desarrollo de una rama de NewOS, la modularidad permite a los controladores y otros componentes que se carguen de manera dinamica todo lo proceso segun sea necesario. 
 La siguientes son las capas principales que conforman el sistema operativo, según \citep{2025deployment}:
@@ -34,7 +35,7 @@ La siguientes son las capas principales que conforman el sistema operativo, seg�
     \item \textbf{Gestión de paquetes: } Haiku es compatible con Be File System (BFC) que incluye atributos de archivos extendidos.
     \item \textbf{Controlador de red:} Haiku incluye una pila de red modular compatible con estaciones.
 \end{itemize}
-En la siguiente imagen es al arquitectura del sistema operativo BeOS. Se puede observar que entre el hardware y las aplicaciones del software se encuentra el software BeOS. El software del sistema operativo tiene 3 capas, capa de micronucleo, capa de servidor y capa de software.
+En la siguiente imagen es al arquitectura del sistema operativo BeOS (el precursor de HaikuOS). Se puede observar que entre el hardware y las aplicaciones del software se encuentra el software BeOS. El software del sistema operativo tiene 3 capas, capa de micronucleo, capa de servidor y capa de software.
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{figures/ArquitecturaBeos.png}
@@ -45,53 +46,62 @@ En la siguiente imagen es al arquitectura del sistema operativo BeOS. Se puede o
 \small Fuente: Obtenido de \citep{beinc_beos_bible_kits} 
 \end{figure}
 
+\subsection{Componentes implementados (procesos, memoria, archivos, etc.)}
+En HaikuOS, como es característico en sistemas operativos de arquitectura híbrida modular, los componentes principales están implementados y se ejecutan en modo kernel, pero con una alta modularidad organizada en “kits” y servidores.
+A continuación se presenta una tabla con los principales componentes y subsistemas de HaikuOS, su ubicación en el repositorio oficial y la idea técnica detrás de su implementación.
 \begin{table}[H]
 \centering
-\caption{Comparación entre tipos de kernel: Monolítico, Microkernel e Híbrido/Modular (Haiku OS)}
-\label{tab:kernel_comparacion}
-\begin{tabular}{|p{2.5cm}|p{4.2cm}|p{4.2cm}|p{4.2cm}|}
+\caption{Funcionamiento técnico (idea clave) de los principales subsistemas de HaikuOS}
+\begin{tabular}{|p{3.5cm}|p{5cm}|p{6cm}|}
 \hline
-\textbf{Aspecto} & \textbf{Monolítico} & \textbf{Microkernel} & \textbf{Híbrido/Modular} \\ \hline
-
-\textbf{Definición} &
-Incluye todos los servicios(gestión de memoria, E/S, controladores). &
-Separa los servicios en procesos de usuario y nucleo(planificación, IPC, memoria). &
-Combina elementos de ambos modelos. \\ \hline
-
-\textbf{Arquitectura} &
-Comunicación directa entre subsistemas. &
-Diseño con fuerte aislamiento y comunicación por mensajes. &
-Diseño que usa comunicación interna. \\ \hline
-
-\textbf{Rendimiento} &
-Muy alto.&
-Menor rendimiento por la sobrecarga del IPC. &
-Similar al monolítico. \\ \hline
-
-\textbf{Estabilidad y seguridad} &
-Baja: Debido a fallos en un módulo. &
-Alta: los fallos no afectan al núcleo principal. &
-Intermedia: mayor aislamiento que el monolítico. \\ \hline
-
-\textbf{Mantenibilidad} &
-Difícil de mantener y depurar; requiere recompilar el núcleo completo. &
-Alta: componentes independientes facilitan depuración y portabilidad. &
-Moderada: estructura modular permite reemplazar componentes sin reconstruir todo el sistema. \\ \hline
-
-\textbf{Sistemas Operativos} &
-Linux, FreeBSD, Unix clásico. &
-MINIX3, QNX, seL4, Mach. &
-Windows NT, macOS (XNU), Haiku OS, BeOS. \\ \hline
-
+\textbf{Componente / Sub-sistema} & \textbf{Nombre / Ruta en repositorio} & \textbf{Funcionamiento técnico (idea clave)} \\ \hline
+Gestión de memoria & \texttt{src/system/kernel/vm/}, \texttt{paging.cpp} & Asignar páginas, espacio de direcciones por proceso. \\ \hline
+Scheduling / multitarea & \texttt{src/system/kernel/ thread.cpp}, \texttt{scheduler.cpp} & Soporte para multiprocesador, planificación preventiva y cambio de contexto eficiente. \\ \hline
+Sistema de archivos & \texttt{src/add-ons/kernel/ file\_systems/} & BFS extendido, con journalling; soporte FAT para compatibilidad. \\ \hline
+Drivers / E/S & \texttt{src/add-ons/kernel/ {drivers, bus\_managers}/} & Implementados como módulos independientes y jerarquizados. \\ \hline
+Servicios de red & \texttt{src/add-ons/kernel/ network/}, \texttt{src/servers/net\_server/} & Pila TCP/IP modular, soporte para sockets BSD, DHCP y servicios de red como servidores. \\ \hline
+Interfaz gráfica / servicios de usuario & \texttt{src/servers/app/}, \texttt{src/servers/input/}, \texttt{src/kits/interface/}, \texttt{app\_server}, \texttt{input\_server} & Servidores para gestión gráfica y entrada, comunicación mediante kits orientados a objetos (GUI toolkit). \\ \hline
 \end{tabular}
 \centering
-\small Fuente: Adaptado de \citep{tanenbaum2015modern, herder2009minix3, russinovich2012windows, haiku2023arch, windriver2008osarch}.
+Fuente: Elaboración propia con base en \citep{haiku_GitHub,2025deployment}.
 \end{table}
 
-\subsection{Componentes implementados (procesos, memoria, archivos, etc.)}
+\subsubsection*{Gestión de memoria}
+En HaikuOS se gestiona la memoria virtual con asignación de páginas bajo demanda, con método indexado y vector de bits para administrar espacio libre; y cada proceso tiene su propio espacio de direcciones. El módulo de “Virtual Memory Manager” se encarga de la asignación física y lógica de memoria \citep{Gonzales2017haiku}.
 
+\subsubsection*{Scheduling / multitarea}
+La planificación de hilos en el sistema operativo HaikuOS soporta más de un núcleo. Cada hilo tiene su propio contexto; el scheduler organiza prioridades (para usar el CPU) y cambios de contexto \citep{2025deployment}.
+
+\subsubsection*{Sistema de archivos}
+En HaikuOS, se tiene el sistema de archivos BFS (Be File System) con metadatos extendidos (pares clave-valor) y búsquedas indexadas. Además tiene soporte para otros sistemas como FAT para compatibilidad \citep{2025deployment,haiku_GitHub}.
+
+\subsubsection*{Drivers / E/S}
+Los drivers están organizados en forma de árbol con E/S (la cual está muy optimizada para contenido multimedia) en forma de módulos independientes, para permitir actualizarse en ejecución \citep{haiku_website_2025,beinc_beos_bible_kits}.
+
+\subsubsection*{Servicios de red}
+El sistema operativo HaikuOS, cuenta con un kit (Network Kit) muy completo y el servidor \texttt{net\_server} para comunicaciones. Tiene soporte para los protocolos TCP/IP y UDP, incluso, si le añades complementos, AppleTalk o IPX \citep{2025deployment,beinc_beos_bible_kits}.
+
+\subsubsection*{Interfaz gráfica / servicios de usuario}
+La interfaz gráfica de usuario de Haiku es gestionada por los servidores \texttt{app\_server} e \texttt{input\_server}. Los “kits” de desarrollo (Application, Interface) nos proporcionan APIs con el paradigma orientado a objetos en C++ para aplicaciones y servicios \citep{2025deployment}.
 
 \subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
-
+HaikuOS utiliza diversas herramientas para ejecutar, compilar y construir. También usa máquinas virtuales e implementaciones con funcionalidades adicionales. Entre las principales herramientas se encuentran:
+\begin{itemize}
+    \item \textbf{Compilador:} Uso de GCC 2 (modificado), para mantener compatibilidad con BeOS, y GCC 13 para el desarrollo actual \citep{Installing2024haiku}.
+    \item \textbf{Emuladores y máquinas virtuales:} En \citep{Installing2024haiku} se hace uso de VirtualBox y en su página oficial \citep{haikuos2025} se recomienda usar QEMU, así que HaikuOS puede ejecutarse en ambos entornos.
+    \item \textbf{Sistema de construcción:} Haiku modifica la herramienta “Jam” para compilar el kernel, los drivers y la interfaz gráfica. También ofrece compilación cruzada para otras arquitecturas \citep{haikuos2025}.
+    \item \textbf{Herramientas de portabilidad:} En el repositorio \citep{haiku_GitHub}, se encuentran scripts \textit{raw disk}, \textit{MMC} o \textit{SD card} para generar imágenes en diferentes arquitecturas.
+\end{itemize}
 
 \subsection{Nivel de complejidad y accesibilidad para estudiantes}
+Considerando un entorno académico de estudio de sistemas operativos, justamente el ambiente para el cual se
+propicia esta investigación, con conocimientos previos de C (el antecesor de C++) y fundamentos de sistemas
+operativos; HaikuOS es un proyecto con nivel de complejidad media, debido a su arquictectura híbrida modular,
+la cual no es muy común, y a la cantidad de componentes implementados, y la profundidad de los mismos (por
+ejemplo, la interfaz gráfica y optimización para multimedia). Además de la herramientas utilizadas para su
+construcción y portabilidad.
+
+También se consideró para colocarlo en el nivel medio, que la accesibilidad para los estudiantes es buena,
+ya que el proyecto es open source, aunque no cuenta con tantos estudios en torno a él como otros sistemas.
+Su página web oficial es bastante completa, y el repositorio oficial está bien organizado. Sin embargo, no
+posee una documentación formal tan detallada como otros sistemas operativos.
