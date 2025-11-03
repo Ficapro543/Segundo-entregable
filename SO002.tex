@@ -1,7 +1,7 @@
 \section{XV6}
 
 \subsection{Nombre del proyecto o sistema operativo}
-El sistema operativo xv6 es una versión moderna y simplificada del Unix Sexta Edición (V6), creada con fines educativos. Fue desarrollado por el MIT en 2006 para el curso de Engineering Operating Systems (6.828) \citep{xv6_mit}, con el objetivo de ofrecer una herramienta didáctica más accesible y actual que el Unix original, el cual estaba escrito en un dialecto antiguo de C (pre-ANSI). Esta reimplementación mantiene la esencia y estructura del Unix clásico, pero utiliza un código más claro y compatible con los entornos de aprendizaje contemporáneos.
+El sistema operativo xv6 es una versión moderna y simplificada del Unix Sexta Edición (V6), creada con fines educativos. Fue desarrollado por el MIT en 2006 para el curso de Engineering Operating Systems (6.828) \citep{xv6_book}, con el objetivo de ofrecer una herramienta didáctica más accesible y actual que el Unix original, el cual estaba escrito en un dialecto antiguo de C (pre-ANSI). Esta reimplementación mantiene la esencia y estructura del Unix clásico, pero utiliza un código más claro y compatible con los entornos de aprendizaje contemporáneos.
 \subsection{Enlace al repositorio y/o documentación oficial}
 \begin{itemize}
     \item \textbf{Pagina oficial:} \url{https://pdos.csail.mit.edu/6.828/2018/xv6.html}
@@ -13,17 +13,17 @@ El sistema operativo xv6 es una versión moderna y simplificada del Unix Sexta E
 El propósito principal de xv6 es educativo y experimental. Fue diseñado para funcionar como un kernel de estudio que permita a los estudiantes comprender los principios fundamentales de Unix dentro de un curso semestral \citep{wikipedia-xv6}. A diferencia de sistemas operativos más complejos como Linux o BSD, xv6 mantiene una estructura lo bastante simple como para ser analizada y entendida en su totalidad durante una asignatura, pero al mismo tiempo conserva los componentes esenciales y la lógica interna de un sistema Unix real. 
 
 \subsection{Lenguaje(s) de implementación}
-El núcleo de xv6 está escrito principalmente en ANSI C, con pequeñas porciones en lenguaje ensamblador (por ejemplo, para rutinas de arranque y manejo de interrupciones)\citep{xv6_mit} (pag.7). La versión original de x86 es C (para x86-32); la versión reciente soporta RISC-V también escrita en C 
+El núcleo de xv6 está escrito principalmente en ANSI C, con pequeñas porciones en lenguaje ensamblador (por ejemplo, para rutinas de arranque y manejo de interrupciones) \citep[pag. 7 ]{xv6_book},. La versión original de x86 es C (para x86-32); la versión reciente soporta RISC-V también escrita en C 
 
 \subsection{Arquitectura del sistema (monolítica, microkernel, etc.)}
-Como explica la documentación, xv6 es un kernel monolítico: toda la funcionalidad del sistema corre con privilegios de kernel, sin servidores externos \citep{xv6_mit} (pag.25)
+Como explica la documentación, xv6 es un kernel monolítico: toda la funcionalidad del sistema corre con privilegios de kernel, sin servidores externos \citep[pag. 25 ]{xv6_book}.
 En Xv6, el kernel sigue el diseño clásico de los sistemas Unix. Funciona como un núcleo único que brinda servicios a múltiples procesos, los cuales se ejecutan en un espacio de usuario independiente.
 Cada proceso va alternando entre dos modos de ejecución:
 \begin{itemize}
     \item \textbf{En el modo usuario:} el proceso ejecuta su propio código y realiza operaciones computacionales básicas.
     \item \textbf{En el modo kernel:} es el sistema operativo quien toma el control para ejecutar las llamadas al sistema solicitadas.
 \end{itemize}
-Este cambio ocurre cuando un proceso necesita un servicio del sistema operativo: el hardware cambia automáticamente a un modo de mayor privilegio (modo supervisor) y transfiere la ejecución al kernel. Una vez que este completa la tarea, devuelve el control al proceso en el espacio de usuario.\citep{xv6_mit} (pag.9)
+Este cambio ocurre cuando un proceso necesita un servicio del sistema operativo: el hardware cambia automáticamente a un modo de mayor privilegio (modo supervisor) y transfiere la ejecución al kernel. Una vez que este completa la tarea, devuelve el control al proceso en el espacio de usuario. \citep[pag. 9]{xv6_book},
 
 \subsection{Componentes implementados (procesos, memoria, archivos, etc.)}
 Xv6 implementa los componentes esenciales de un sistema operativo Unix clásico:
@@ -44,10 +44,10 @@ Comunicación entre procesos (IPC) & \texttt{pipe.c}, \texttt{sys\_pipe.c} & Imp
 \end{table}
 
 \subsubsection*{Gestión de procesos y planificación}
-La creación de procesos usa \texttt{fork()} para copiar el proceso padre y \texttt{exec()} para cargar nuevos programas. La planificación emplea un algoritmo \textbf{round-robin} básico, donde cada CPU asigna turnos de tiempo fijo a los procesos en una lista cíclica, sin prioridades. Todos los procesos comparten el mismo entorno básico, sin distinción entre usuarios \citep{xv6_mit} (pág. 82).
+La creación de procesos usa \texttt{fork()} para copiar el proceso padre y \texttt{exec()} para cargar nuevos programas. La planificación emplea un algoritmo \textbf{round-robin} básico, donde cada CPU asigna turnos de tiempo fijo a los procesos en una lista cíclica, sin prioridades. Todos los procesos comparten el mismo entorno básico, sin distinción entre usuarios \citep[pag. 82 ]{xv6_book}.
 
 \subsubsection*{Gestión de memoria virtual}
-Xv6 gestiona la memoria mediante paginación, asignando a cada proceso un espacio de direcciones virtual independiente. Utiliza solo 38 bits de los 64 que soporta RISC-V, permitiendo teóricamente hasta 256 GB de memoria por proceso \cite{xv6_mit} (pág. 38).
+Xv6 gestiona la memoria mediante paginación, asignando a cada proceso un espacio de direcciones virtual independiente. Utiliza solo 38 bits de los 64 que soporta RISC-V, permitiendo teóricamente hasta 256 GB de memoria por proceso \citep[pag. 38 ]{xv6_book}.
 
 El espacio de direcciones de cada proceso sigue la convención Unix clásica:
 La distribución de la memoria sigue el diseño clásico de Unix:
@@ -59,14 +59,16 @@ La distribución de la memoria sigue el diseño clásico de Unix:
     
     \item \textbf{Pila del Usuario}: Ubicada en la parte superior de la memoria, crece hacia abajo y tiene una \textit{página guardia} inferior. Cualquier acceso a esta página causa que el kernel termine el proceso, previniendo desbordamientos.
 
+\end{itemize}
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{figures/figura-xv6-2.png}
 \centering
 \caption{Disposicion del espacio de direcciones virtuales de un proceso.}
-\label{fig:fig:figura_xv6_2}
+\label{fig:figura_xv6_2}
 \centering
-\small Fuente: Obtenido de \citep{xv6_mit} \textit{xv6: a simple, Unix-like teaching operating system}.
+\small Fuente: Obtenido de \citep{xv6_book} \textit{xv6: a simple, Unix-like teaching operating system}.
 \end{figure}
 
 \subsubsection*{Sistema de archivos}
@@ -87,10 +89,10 @@ El disco se estructura en secciones bien definidas:
 Los directorios son archivos especiales que asocian nombres con inodos. Las rutas se resuelven secuencialmente (ej: \texttt{/usr/bin/ls} busca \texttt{usr}, luego \texttt{bin}).
 
 Las operaciones básicas (\texttt{open}, \texttt{read}, \texttt{write}, \texttt{close}) usan \textbf{descriptores de archivo} y una \textbf{caché de bloques}. \texttt{read} carga datos a memoria, mientras \texttt{write} los marca para escritura transaccional.
-\citep{xv6_mit}(pag. 85-86)
+\citep[pag. 85--86 ]{xv6_book}.
 
 \subsubsection*{Interfaz de llamadas (syscalls)}
-Xv6 implementa llamadas al sistema que siguen el modelo tradicional de Unix, permitiendo a los programas de usuario solicitar servicios del kernel mediante interrupciones de software.\citep{xv6_mit} (pág. 9)
+Xv6 implementa llamadas al sistema que siguen el modelo tradicional de Unix, permitiendo a los programas de usuario solicitar servicios del kernel mediante interrupciones de software.\citep[pag. 8--9 ]{xv6_book}.
 
 El mecanismo funciona de la siguiente manera:
 \begin{enumerate}
@@ -117,7 +119,7 @@ El kernel incluye controladores mínimos pero funcionales para hardware esencial
 \end{itemize}
 
 \subsubsection*{Comunicación entre procesos (IPC)}
-Xv6 implementa un mecanismo básico de comunicación entre procesos (IPC) mediante \textbf{pipes}. Las pipes son canales unidireccionales en memoria que permiten a dos procesos relacionados intercambiar datos de forma sincronizada.\citep{xv6_mit}(pag. 74)
+Xv6 implementa un mecanismo básico de comunicación entre procesos (IPC) mediante \textbf{pipes}. Las pipes son canales unidireccionales en memoria que permiten a dos procesos relacionados intercambiar datos de forma sincronizada.\citep[pag. 73--74 ]{xv6_book},
 
 \subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
 
@@ -130,7 +132,8 @@ Para la construcción, compilación y ejecución de \textit{xv6}, se emplean las
     
     \item \textbf{Cross-compiler:} En sistemas como macOS o Windows, se requiere un compilador cruzado para generar binarios ELF destinados a la arquitectura objetivo de \textit{xv6}.
 \end{itemize}
+\citep{xv6_source},
 
-\subsection{Nivel de complejidad y accesibilidad para estudiantes}
+\subsection{Nivel de complejidad y accesibisslidad para estudiantes}
 Xv6 fue diseñado específicamente para ser un sistema operativo ligero y educativo. Su código completo consta de aproximadamente 10,000 líneas (equivalente a unas 99 páginas impresas)
-Su simplicidad relativa (ausencia de capas complejas como módulos dinámicos) lo hace muy accesible para estudiantes de OS. Aun así, cubre los conceptos esenciales de concurrencia, paginación, sistemas de archivos y llamadas al sistema típicos de un Unix real\citep{xv6_mit} (pag.10)
+Su simplicidad relativa (ausencia de capas complejas como módulos dinámicos) lo hace muy accesible para estudiantes de OS. Aun así, cubre los conceptos esenciales de concurrencia, paginación, sistemas de archivos y llamadas al sistema típicos de un Unix real.\citep[pag. 10--11 ]{xv6_book}.
