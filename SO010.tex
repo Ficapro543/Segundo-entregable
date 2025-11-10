@@ -10,7 +10,7 @@ El sistema operativo FreeDOS, su nombre proviene de la idea de ofrecer una alter
 \end{itemize}
 
 \subsection{Objetivo del proyecto}
-El objetivo principal de FreeDOS es proporcionar un sistema operativo compatible con MS-DOS completamente libre, de código abierto y mantenido por la comunidad.  
+El objetivo principal de FreeDOS, además de sus enfoques educativo y experimental, es proporcionar un sistema operativo compatible con MS-DOS completamente libre, de código abierto y mantenido por la comunidad.  
 Busca preservar la capacidad de ejecutar aplicaciones y controladores diseñados originalmente para DOS, especialmente aquellas dependientes de entornos de 16 bits \citep{freedos_home}.  
 
 \subsection{Lenguaje(s) de implementación}
@@ -54,22 +54,22 @@ Drivers y dispositivos & Varios \texttt{.SYS / .EXE} & Drivers para discos, CD-R
 Fuente: Elaboración propia con base en la documentación técnica de FreeDOS.
 \end{table}
 
-\subsubsection{Intérprete de comandos}
+\subsubsection*{Intérprete de comandos}
 Proporciona la interfaz de línea de comandos para interactuar con el sistema operativo. Su función principal es cargar programas ejecutables, procesar scripts por lotes (.BAT) y manejar características básicas como redirección de entrada/salida y piping entre comandos. FreeDOS incluye su propio COMMAND.COM y alternativas como Free-COM. \citep[pag. 240--242 ]{freedos_kernel}
 
-\subsubsection{Kernel}
+\subsubsection*{Kernel}
 Implementa las funciones centrales compatibles con MS-DOS mediante servicios de interrupción 21h para operaciones de archivos, dispositivos, tiempo y memoria. Gestiona memoria convencional y superior (UMB), soporta programas TSR (Terminate and Stay Resident) y proporciona servicios básicos de disco. El kernel de FreeDOS deriva del proyecto DOS-C y está licenciado bajo GPL v2. \citep{freedos_kernel}
 
-\subsubsection{Sistema de archivos}
+\subsubsection*{Sistema de archivos}
 Brinda soporte nativo para sistemas de archivos FAT12, FAT16 y FAT32 en modo DOS real. Permite el manejo de particiones FAT y disquetes mediante drivers, con herramientas tradicionales como COPY, DIR y DEL para operaciones básicas. A diferencia de sistemas modernos, FreeDOS no implementa un VFS ni abstracciones complejas de dispositivos. \citep[pag. 30--33 ]{freedos_kernel}
 
-\subsubsection{Gestión de memoria}
+\subsubsection*{Gestión de memoria}
 Administra el modelo clásico de memoria DOS con espacio convencional (primeros 640 KB) y memoria superior (UMB) mediante controladores. Soporta extensiones de memoria a través de controladores como Himem.sys y emm386.exe en entornos compatibles, pero carece de mecanismos modernos como protección de memoria o paginación presentes como en SO modernos. \citep[pag. 48 ]{freedos_kernel}
 
-\subsubsection{Gestión de procesos}
+\subsubsection*{Gestión de procesos}
 Coordina la ejecución de programas de forma cooperativa en lugar de preemptiva. Permite el uso de programas TSR (Terminate and Stay Resident) que permanecen en memoria para proporcionar servicios, pero no implementa procesos aislados ni protección entre espacios de direcciones. Proyectos externos pueden añadir capacidades de multitarea, aunque no forman parte del kernel base. \citep[pag. 50 ]{freedos_kernel}
 
-\subsubsection{Drivers y dispositivos}
+\subsubsection*{Drivers y dispositivos}
 Proporciona soporte para hardware mediante controladores para discos, CD-ROM, teclado, ratón y otro hardware clásico. algunos drivers se han actualizado para soportar hardware moderno a través de emuladores, manteniendo la compatibilidad con el ecosistema tradicional de DOS, \citep[pag. 52--53 ]{freedos_kernel}
 
 \subsection{Herramientas utilizadas (compiladores, emuladores, etc.)}
