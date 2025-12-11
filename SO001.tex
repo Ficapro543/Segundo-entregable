@@ -22,16 +22,6 @@ para escribir código. Durante años, algunas partes del código también han si
 hardware. En la version de MINIX 3, tan solamente consta de 40000 lineas de código ejecutables, que lo hacen mas fácil de entender y realizar modificaciones en el sistema operativo.
 
 \subsection{Arquitectura del sistema (monolítica, microkernel, etc.)}
-Según \citep[pag. 42--51 ]{tanenbaum2006}, considera las siguiente modelo de estructuras de sistemas operativos.
-\begin{itemize}
-    \item \textbf{Sistemas monolíticos:} En este sistema no tiene estructura, el sistema operativo esta escrito como un conjunto de procedimientos, entonces cada cual puede hacer el llamado a cualquier procedimiento cuando lo necesite.
-    Para construir el programa, primero se compila todos lo procedimientos individuales, luego se unen en un solo archivo objeto. El sistema monolítico esta dividido en 3 capas: programa principal, procedimientos de servicio y procedimientos de utilidad.
-    \item \textbf{Sistema en capas:} Es una mejora de modelo monolítico, donde este se organiza en un jerarquía de niveles, cada uno hecho sobre el inferior. Cada capa usa servicios a la capa inferior y realiza servicios a la capa superior
-    \item \textbf{Maquinas virtuales} Por el motivo que los usuarios no tenían tiempo compartido. Se desarrollo sistemas de tiempo compartido. En este sistema se separo el multiprogramación y la maquina extendida, logrando crear varias maquinas virtuales idénticas al hardware real.
-    \item \textbf{Exokernel:} Es un sistema creado por investigadores del MIT, que permite a cada usuario un clon de ordenador real, pero con una parte de todo lo recursos. funciona la mismo que el sistema de capas, pero en esta caso asigna y controla los recursos de las maquinas virtuales,
-    Las ventaja es que elimina un capa de mapeo, ya no necesita reasignar direcciones de recurso, manteniendo en separación el multiprogramación y lao sistemas de usuario.
-    \item \textbf{Modelo cliente-servidor:} En este modelo se busca simplificar el sistema operativo trasladando la mayoría de sus funciones a procesos de usuario. Dejando un núcleo mínimo para la gestión de comunicación de procesos. Los clientes solicitan servicios y lo servidores ejecutan y responden. Cada servidor se encarga de la memoria, procesos, archivos. A este sistema se le llama como modelo de sistemas distribuidos.
-\end{itemize}
 En el MINIX 3 se usa una arquitectura de microkernel, lo que nos dice que el núcleo o kernel se encarga de funciones mas básicas de sistema. como por ejemplo la planificación de procesos, comunicación, el manejo del hardware. Para poder entender mejor como es la arquitectura de MINIX 3, se muestra la siguiente figura \ref{fig:ArquitecturaMINIX3}.
 \begin{figure}[H]
 \centering
