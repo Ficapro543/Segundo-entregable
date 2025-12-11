@@ -1,28 +1,34 @@
-\chapter*{Introduccion}
+\chapter*{Introducción}
 \addcontentsline{toc}{chapter}{Introducción}
 
-El desarrollo y la transformación de los sistemas operativos han sido fundamentales en la evolución de las tecnologías de la información. Desde los primeros programas creados para las computadoras centrales hasta los sistemas más utilizados en ordenadores personales, dispositivos móviles y equipos embebidos, los sistemas operativos han actuado como un puente entre las necesidades del usuario y la complejidad del hardware. Estudiarlos no solo permite entender el funcionamiento básico de una computadora, sino que también brinda las bases conceptuales y técnicas necesarias para el diseño de nuevas soluciones informáticas. Este documento tiene como finalidad ofrecer una perspectiva global de los sistemas operativos, abordando sus características principales, su arquitectura y sus componentes.
+Para desarrollar un sistema operativo desde sus bases es indispensable conocer, con suficiente detalle, las distintas estructuras y mecanismos que hacen posible su funcionamiento. Más allá de la teoría, resulta especialmente útil examinar sistemas operativos reales —muchos de ellos abiertos y creados con fines educativos o de investigación— que exploran diferentes arquitecturas, modelos de aislamiento y niveles de complejidad.
 
-\section*{Objetivo de la investigacion}
+En este informe se estudian diversas propuestas existentes, entre ellas MINIX, XV6, Theseus, RedoxOS, FlexOS, LibrettOS, FreeRTOS, HelenOS, Haiku OS y FreeDOS. Lo que se busca es aprender de las decisiones de diseño que presentan estos proyectos, contrastar sus propuestas y ver cuáles resultan realmente útiles como referencia para construir un sistema operativo con fines académicos.
 
-El objetivo principal de este trabajo es realizar un análisis técnico y comparativo de distintos sistemas operativos, con la finalidad de identificar sus características más relevantes y examinar las diversas concepciones y enfoques aplicados en su diseño e implementación. Se estudiarán tanto arquitecturas tradicionales, como la monolítica, así como modelos más modernos, entre ellos los exokernels, híbridos y microkernels . Del mismo modo, se pretende ofrecer una visión crítica sobre las ventajas, limitaciones y ámbitos de aplicación de cada sistema operativo.
+\section*{Objetivo de la investigación}
+
+La idea central del estudio es revisar y comparar técnicamente varios sistemas operativos que responden a diferentes arquitecturas y enfoques de diseño, prestando particular atención a los proyectos de código abierto que se usan para enseñar o investigar.
 
 \section*{Alcance del análisis}
-El presente estudio se centra en sistemas operativos ampliamente utilizados y representativos de diferentes enfoques arquitectónicos y áreas de aplicación. No se abordarán sistemas altamente experimentales o versiones obsoletas a menos que sean relevantes para la comparación histórica o conceptual. El análisis incluye tanto sistemas de propósito general (Windows, macOS, Linux) como sistemas especializados (RTOS, embebidos y móviles), enfocándose en aspectos técnicos, operativos y comunitarios que permitan identificar fortalezas, limitaciones y escenarios de uso recomendados para cada sistema operativo.
 
-\section*{Metodologia}
+Este estudio se limita a sistemas operativos que, por su licencia, documentación y propósito, pueden emplearse adecuadamente como referencia en la construcción de un sistema operativo académico. En particular, se revisan los siguientes proyectos: MINIX, XV6, Theseus, RedoxOS, FlexOS, LibrettOS, FreeRTOS, HelenOS, Haiku OS y FreeDOS, cada uno abordado en el Capítulo 1 bajo un esquema de análisis uniforme.
 
-Con el fin de alcanzar los objetivos planteados, se seguirá una metodología compuesta por tres fases fundamentales:
+El alcance comprende únicamente:
 
 \begin{enumerate}
-\item \textbf{Revisión bibliográfica y documental:} Se consultarán libros especializados, artículos académicos, blogs técnicos, documentación oficial y repositorios relacionados con los sistemas operativos en estudio.
-
-\item \textbf{Evaluación técnica:} Se examinarán los aspectos esenciales de cada sistema, incluyendo la gestión de procesos, la administración de memoria, los sistemas de archivos, el manejo de dispositivos, las interfaces de usuario y los mecanismos de seguridad.  
-
-\item \textbf{Comparación estructurada:} Se elaborará una tabla que sintetice las características más representativas de los sistemas operativos analizados, tomando en cuenta factores como el tamaño del kernel, la arquitectura, la comunidad, el lenguaje de implementación, la documentación disponible y el soporte de hardware.  
-
-
+\item La revisión de documentación oficial, artículos académicos y repositorios de código.
+\item Analizar cualitativamente las decisiones de diseño que se tomaron en cada uno de los sistemas revisados.
+\item Elaborar una comparación organizada y un análisis crítico que permita reconocer cuáles de estas propuestas pueden servir mejor como referencia para desarrollar un sistema operativo con fines académicos.
 \end{enumerate}
 
-Este enfoque permitirá garantizar un análisis más objetivo, completo y útil, tanto para fines académicos como prácticos.
+\section*{Metodología}
 
+Para cumplir con los objetivos planteados, se adopta una metodología dividida en tres fases principales:
+
+\begin{enumerate}
+\item \textbf{Revisión bibliográfica y documental:} Aquí se reúne y examina información procedente de libros especializados, artículos académicos, documentación oficial de los proyectos y repositorios de código. Gracias a esta revisión es posible entender el contexto, los objetivos iniciales y la situación actual de cada uno de los sistemas operativos analizados
+
+\item \textbf{Evaluación técnica de cada sistema operativo:} En el Capítulo 1 se estudia cada sistema usando un mismo esquema. Se revisa para qué sirve, cómo está diseñado, qué partes tiene (procesos, memoria, archivos, dispositivos, etc.), qué herramientas se utilizan para trabajarlo, como compiladores o emuladores.y qué tan difícil o accesible es para los estudiantes.
+
+\item \textbf{Comparación estructurada y análisis:} Con base en la información recopilada, el Capítulo 2 desarrolla una comparación general entre los sistemas analizados, evaluando criterios como arquitectura, tamaño del kernel, soporte de hardware, comunidad, documentación y su potencial para fines formativos. En el Capítulo 3 se presenta un análisis crítico donde se examinan las ventajas y limitaciones  de cada propuesta, reflexionando sobre su idoneidad como punto de partida para la construcción de un sistema operativo.
+\end{enumerate}
